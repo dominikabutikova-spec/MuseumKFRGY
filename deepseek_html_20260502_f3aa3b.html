@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Музей КФ РГУ СоцТех</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+        }
+
+        :root {
+            --bg-light: #F8FAFE;
+            --dark: #1E2A3E;
+            --accent-gold: #C9A03D;
+            --card-white: #FFFFFF;
+            --text-dark: #1F2937;
+            --text-soft: #4B5563;
+            --border-light: #E5E7EB;
+            --shadow-sm: 0 8px 20px rgba(0,0,0,0.05);
+        }
+
+        body {
+            background: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.5;
+        }
+
+        header {
+            background: var(--dark);
+            padding: 0.8rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .logo-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .logo-img img {
+            width: 100%;
+            height: auto;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .logo-text h2 {
+            color: white;
+            font-weight: 500;
+            font-size: 1.2rem;
+        }
+        .logo-text span {
+            color: var(--accent-gold);
+            font-weight: 700;
+        }
+        nav ul {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        nav a {
+            color: #F0F2F5;
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+        nav a:hover {
+            color: var(--accent-gold);
+        }
+        .auth-buttons {
+            display: flex;
+            gap: 0.8rem;
+        }
+        .auth-btn {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.4);
+            color: white;
+            padding: 0.4rem 1.2rem;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .auth-btn.register {
+            background: var(--accent-gold);
+            border: none;
+            color: var(--dark);
+        }
+        .user-greeting {
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .logout-icon {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 30px;
+            cursor: pointer;
+        }
+
+        /* Hero с фоновой фотографией — увеличена высота */
+        .hero {
+            background: url('Фотографии и другие документы/Rectangle 4.png') center/cover no-repeat;
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem 2rem;
+        }
+        .hero-text-box {
+            max-width: 800px;
+            background: rgba(30, 42, 62, 0.75);
+            backdrop-filter: blur(3px);
+            padding: 2.5rem 3rem;
+            border-radius: 32px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+        .hero h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: var(--accent-gold);
+            margin-bottom: 1rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--accent-gold);
+            margin-top: 0.5rem;
+        }
+
+        .about-section {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+        .about-grid {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            flex-wrap: wrap;
+            background: var(--card-white);
+            border-radius: 28px;
+            padding: 2rem;
+            box-shadow: var(--shadow-sm);
+        }
+        .about-text {
+            flex: 2;
+        }
+        /* Подложка только под словом «О музее колледжа» */
+        .about-text h2 {
+            margin-bottom: 1rem;
+            background: rgba(30, 42, 62, 0.7);
+            display: inline-block;
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            font-size: 1.6rem;
+            color: var(--accent-gold);
+        }
+        .about-text p {
+            margin-bottom: 1rem;
+            color: var(--text-soft);
+            line-height: 1.5;
+        }
+        .about-image {
+            flex: 1;
+            text-align: center;
+        }
+        .about-image img {
+            max-width: 100%;
+            border-radius: 24px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .features {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2rem;
+        }
+        .feature-card {
+            background: var(--card-white);
+            border-radius: 24px;
+            padding: 1.8rem;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.2s;
+            border: 1px solid var(--border-light);
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-gold);
+        }
+        .feature-card i { font-size: 2.5rem; color: var(--accent-gold); margin-bottom: 1rem; }
+
+        .btn-excursion {
+            background: var(--dark);
+            color: white;
+            border: none;
+            padding: 0.9rem 2rem;
+            border-radius: 60px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-excursion:hover { background: #2d3f55; transform: scale(1.02); }
+
+        footer {
+            background: var(--dark);
+            color: #DDD;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .modal.active { display: flex; }
+        .modal-content {
+            background: white;
+            max-width: 420px;
+            width: 90%;
+            border-radius: 28px;
+            padding: 2rem;
+        }
+        .modal-content input {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 60px;
+        }
+        .error { color: #c0392b; font-size: 0.8rem; }
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1e2a3e;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 60px;
+            z-index: 1100;
+        }
+        .hidden-page { display: none; }
+        .page-content {
+            max-width: 1000px;
+            margin: 2rem auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 28px;
+        }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        .gallery-grid img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 20px;
+            box-shadow: var(--shadow-sm);
+        }
+        .exhibit-card {
+            background: var(--card-white);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: 0.2s;
+        }
+        .exhibit-card:hover { transform: translateY(-5px); }
+        .exhibit-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+        .exhibit-info { padding: 1rem; }
+        .exhibit-info h3 { margin-bottom: 0.3rem; }
+        .exhibit-info p { color: var(--text-soft); font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo-area">
+        <div class="logo-img">
+            <img src="Фотографии и другие документы/logo.png" alt="Логотип">
+        </div>
+        <div class="logo-text">
+            <h2>РГУСоцТех <span>| Музей</span></h2>
+        </div>
+    </div>
+    <nav>
+        <ul>
+            <li><a data-page="home">Главная</a></li>
+            <li><a data-page="exhibits">Экспонаты</a></li>
+            <li><a data-page="photoarchive">Фотоархив</a></li>
+            <li><a data-page="history">История</a></li>
+            <li><a data-page="contacts">Контакты</a></li>
+        </ul>
+    </nav>
+    <div id="authArea"></div>
+</header>
+
+<main>
+    <!-- ГЛАВНАЯ -->
+    <div id="homePage">
+        <div class="hero">
+            <div class="hero-text-box">
+                <h1>Музей КФ РГУ СоцТех</h1>
+                <p>Сертифицирован на Портале школьных музеев РФ. Экспонаты, документы, история образования в Калмыкии.</p>
+            </div>
+        </div>
+
+        <div class="about-section">
+            <div class="about-grid">
+                <div class="about-text">
+                    <h2>О музее колледжа</h2>
+                    <p>Музей КФ РГУ СоцТех — место, где история колледжа оживает. Здесь хранятся свидетельства прошлого: от первых дипломов до современных наград.</p>
+                    <p>Экскурсии в музее — это разговор о традициях, уважении к старшим, памяти. Музей включён в официальный реестр образовательных организаций России.</p>
+                </div>
+                <div class="about-image">
+                    <img src="Фотографии и другие документы/mXIUQX79.jpg" alt="Фото музея">
+                </div>
+            </div>
+        </div>
+
+        <div class="features">
+            <div class="feature-card" data-link="certificate">
+                <i class="fas fa-certificate"></i>
+                <h3>Сертификат музея</h3>
+                <p>Официальная регистрация на Портале школьных музеев РФ.</p>
+            </div>
+            <div class="feature-card" data-link="exhibits-collection">
+                <i class="fas fa-microscope"></i>
+                <h3>Экспонаты</h3>
+                <p>Коллекция артефактов истории колледжа.</p>
+            </div>
+            <div class="feature-card" data-link="photoarchive">
+                <i class="fas fa-images"></i>
+                <h3>Фотоархив</h3>
+                <p>Снимки студентов и преподавателей разных лет.</p>
+            </div>
+        </div>
+
+        <div style="text-align:center; margin: 2rem;">
+            <button class="btn-excursion" id="excursionBtn"><i class="fas fa-calendar-alt"></i> Записаться на экскурсию</button>
+        </div>
+    </div>
+
+    <!-- ЭКСПОНАТЫ (3 карточки с фото) -->
+    <div id="exhibitsPage" class="hidden-page">
+        <div class="page-content">
+            <h2>Экспонаты музея</h2>
+            <p>Уникальные предметы, хранящие историю нашего колледжа.</p>
+            <div class="gallery-grid">
+                <div class="exhibit-card">
+                    <img src="https://via.placeholder.com/300x200?text=Диплом+1975" alt="Диплом выпускника">
+                    <div class="exhibit-info">
+                        <h3>Диплом выпускника 1975 г.</h3>
+                        <p>Первый диплом об окончании техникума. Уникальный документ с подписями основателей.</p>
+                    </div>
+                </div>
+                <div class="exhibit-card">
+                    <img src="https://via.placeholder.com/300x200?text=Награда+ВОВ" alt="Награда ветерана">
+                    <div class="exhibit-info">
+                        <h3>Награды ветеранов ВОВ</h3>
+                        <p>Медали и ордена преподавателей-участников Великой Отечественной войны.</p>
+                    </div>
+                </div>
+                <div class="exhibit-card">
+                    <img src="https://via.placeholder.com/300x200?text=Фото+преподавателей" alt="Старое фото">
+                    <div class="exhibit-info">
+                        <h3>Фотохроника 1970–1980 гг.</h3>
+                        <p>Архивные снимки первых преподавателей и студентов.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ФОТОАРХИВ (отдельная страница, все фотографии) -->
+    <div id="photoarchivePage" class="hidden-page">
+        <div class="page-content">
+            <h2>Фотоархив музея</h2>
+            <p>Снимки разных лет: выпуски, мероприятия, преподаватели.</p>
+            <div class="gallery-grid">
+                <img src="https://via.placeholder.com/300x180?text=Выпуск+1975" alt="Выпуск 1975">
+                <img src="https://via.placeholder.com/300x180?text=Преподаватели+1980" alt="Преподаватели">
+                <img src="https://via.placeholder.com/300x180?text=Студенты+в+музее" alt="Экскурсия">
+                <img src="https://via.placeholder.com/300x180?text=Открытие+выставки" alt="Выставка">
+                <img src="https://via.placeholder.com/300x180?text=Встреча+выпускников" alt="Встреча выпускников">
+                <img src="https://via.placeholder.com/300x180?text=Награждение" alt="Награждение">
+                <img src="https://via.placeholder.com/300x180?text=Старое+здание" alt="Старое здание">
+                <img src="https://via.placeholder.com/300x180?text=Студенческая+жизнь" alt="Студенческая жизнь">
+            </div>
+        </div>
+    </div>
+
+    <!-- ИСТОРИЯ -->
+    <div id="historyPage" class="hidden-page">
+        <div class="page-content">
+            <h2>История колледжа и музея</h2>
+            <p>Калмыцкий филиал РГУ СоцТех ведёт историю с 1970-х. Музей создан для сохранения памяти о первых директорах, преподавателях, выдающихся выпускниках.</p>
+            <p>Сегодня здесь хранятся уникальные документы, редкие фотографии, письма и личные вещи, которые помогают сохранить связь поколений.</p>
+        </div>
+    </div>
+
+    <!-- КОНТАКТЫ -->
+    <div id="contactsPage" class="hidden-page">
+        <div class="page-content">
+            <h2>Контакты</h2>
+            <p><i class="fas fa-map-marker-alt"></i> г. Элиста, проспект Чонкушова, 71</p>
+            <p><i class="fas fa-envelope"></i> museum@kflial.rgust.ru</p>
+            <p><i class="fas fa-phone-alt"></i> +7 (937) 123-45-67</p>
+            <hr style="margin:20px 0">
+            <h3>Форма обратной связи</h3>
+            <form id="contactForm">
+                <input type="text" id="contactName" placeholder="Ваше имя" style="width:100%; margin:5px 0; padding:10px; border-radius:40px;">
+                <input type="email" id="contactEmail" placeholder="Ваш email" style="width:100%; margin:5px 0; padding:10px; border-radius:40px;">
+                <textarea id="contactMsg" rows="3" placeholder="Сообщение" style="width:100%; margin:5px 0; padding:10px; border-radius:20px;"></textarea>
+                <button type="submit" class="btn-excursion" style="width:100%">Отправить</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- страница-заглушка для сертификата -->
+    <div id="certificatePage" class="hidden-page">
+        <div class="page-content">
+            <h2>Сертификат музея</h2>
+            <img src="https://via.placeholder.com/600x400?text=Сертификат+музея+КФ+РГУ+СоцТех" style="width:100%; border-radius:24px; margin:1rem 0">
+            <p>Официальная регистрация на Портале школьных музеев РФ. Музей соответствует всем требованиям образовательной организации.</p>
+            <button class="btn-excursion" onclick="showPage('homePage')">← Вернуться на главную</button>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <p>© 2026 Музей КФ РГУ СоцТех. Официальный сайт филиала.</p>
+    <p>г. Элиста, проспект Чонкушова, 71 | museum@kflial.rgust.ru</p>
+</footer>
+
+<script>
+    let currentUser = null;
+    function loadUsers() { return JSON.parse(localStorage.getItem("museum_users") || "{}"); }
+    function saveUsers(u) { localStorage.setItem("museum_users", JSON.stringify(u)); }
+    function updateAuthUI() {
+        const area = document.getElementById("authArea");
+        if(currentUser) {
+            area.innerHTML = `<div class="user-greeting">👋 Привет, ${currentUser.name}<button class="logout-icon" id="logoutBtn">Выйти</button></div>`;
+            document.getElementById("logoutBtn")?.addEventListener("click", () => { currentUser=null; localStorage.removeItem("museum_current"); updateAuthUI(); showToast("Вы вышли"); });
+        } else {
+            area.innerHTML = `<div class="auth-buttons"><button class="auth-btn" id="showLoginBtn">Вход</button><button class="auth-btn register" id="showRegBtn">Регистрация</button></div>`;
+            document.getElementById("showLoginBtn")?.addEventListener("click", ()=>openModal("loginModal"));
+            document.getElementById("showRegBtn")?.addEventListener("click", ()=>openModal("registerModal"));
+        }
+    }
+    function openModal(id) { document.getElementById(id).classList.add("active"); }
+    function closeModals() { document.querySelectorAll(".modal").forEach(m=>m.classList.remove("active")); }
+    function showToast(msg) { let t=document.createElement("div"); t.className="toast"; t.innerText=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),3000); }
+    document.getElementById("doRegister")?.addEventListener("click",()=>{
+        let name=document.getElementById("regName").value.trim(), email=document.getElementById("regEmail").value.trim(), p1=document.getElementById("regPass").value, p2=document.getElementById("regPass2").value, err=document.getElementById("regError");
+        if(!name||!email||!p1){err.innerText="Заполните все поля";return;}
+        if(p1.length<6){err.innerText="Пароль минимум 6 символов";return;}
+        if(p1!==p2){err.innerText="Пароли не совпадают";return;}
+        let users=loadUsers(); if(users[email]){err.innerText="Email уже зарегистрирован";return;}
+        users[email]={name,email,password:p1}; saveUsers(users); err.innerText=""; closeModals(); showToast("Регистрация успешна! Войдите.");
+        document.getElementById("loginEmail").value=email; openModal("loginModal");
+    });
+    document.getElementById("doLogin")?.addEventListener("click",()=>{
+        let email=document.getElementById("loginEmail").value.trim(), pwd=document.getElementById("loginPass").value, err=document.getElementById("loginError");
+        let users=loadUsers(); if(!users[email] || users[email].password!==pwd){err.innerText="Неверный email или пароль";return;}
+        currentUser={name:users[email].name, email}; localStorage.setItem("museum_current",JSON.stringify(currentUser)); updateAuthUI(); closeModals(); showToast(`Добро пожаловать, ${currentUser.name}!`);
+    });
+    document.getElementById("switchToLogin")?.addEventListener("click",(e)=>{e.preventDefault();closeModals();openModal("loginModal");});
+    document.getElementById("switchToReg")?.addEventListener("click",(e)=>{e.preventDefault();closeModals();openModal("registerModal");});
+    window.onclick=(e)=>{if(e.target.classList?.contains("modal"))closeModals();};
+
+    function showPage(pageId) {
+        ["homePage","exhibitsPage","photoarchivePage","historyPage","contactsPage","certificatePage"].forEach(id=>{
+            let el=document.getElementById(id); if(el) el.classList.add("hidden-page");
+        });
+        document.getElementById(pageId).classList.remove("hidden-page");
+    }
+    document.querySelectorAll("nav a").forEach(link=>{
+        link.addEventListener("click",()=>{
+            let page=link.dataset.page;
+            if(page==="home") showPage("homePage");
+            if(page==="exhibits") showPage("exhibitsPage");
+            if(page==="photoarchive") showPage("photoarchivePage");
+            if(page==="history") showPage("historyPage");
+            if(page==="contacts") showPage("contactsPage");
+        });
+    });
+    document.querySelectorAll(".feature-card").forEach(card=>{
+        card.addEventListener("click",()=>{
+            let link=card.dataset.link;
+            if(link==="certificate") showPage("certificatePage");
+            if(link==="exhibits-collection") showPage("exhibitsPage");
+            if(link==="photoarchive") showPage("photoarchivePage");
+        });
+    });
+    document.getElementById("excursionBtn")?.addEventListener("click",()=>{
+        if(currentUser) showToast(`✅ ${currentUser.name}, заявка принята! С вами свяжутся.`);
+        else showToast("Пожалуйста, войдите или зарегистрируйтесь для записи.");
+    });
+    document.getElementById("contactForm")?.addEventListener("submit",(e)=>{ e.preventDefault(); showToast("Сообщение отправлено (учебный режим)."); document.getElementById("contactForm").reset(); });
+    let saved=localStorage.getItem("museum_current");
+    if(saved){ try{ currentUser=JSON.parse(saved); if(!loadUsers()[currentUser.email]) currentUser=null; }catch(e){} }
+    updateAuthUI();
+    if(!document.getElementById("homePage").classList.contains("hidden-page")) showPage("homePage");
+</script>
+</body>
+</html>
