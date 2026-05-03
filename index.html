@@ -12,6 +12,7 @@
             box-sizing: border-box;
             font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
         }
+
         :root {
             --bg-light: #F8FAFE;
             --dark: #1E2A3E;
@@ -38,6 +39,7 @@
             flex-wrap: wrap;
             gap: 1rem;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: relative;
         }
         .logo-area {
             display: flex;
@@ -67,6 +69,13 @@
             color: var(--accent-gold);
             font-weight: 700;
         }
+
+        /* Десктопное меню */
+        nav {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+        }
         nav ul {
             display: flex;
             gap: 2rem;
@@ -82,6 +91,57 @@
         nav a:hover {
             color: var(--accent-gold);
         }
+
+        /* Бургер-меню (появляется на телефонах) */
+        .burger {
+            display: none;
+            font-size: 1.8rem;
+            background: none;
+            border: none;
+            color: var(--accent-gold);
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+        .mobile-nav {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--dark);
+            flex-direction: column;
+            padding: 1rem 2rem;
+            z-index: 200;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .mobile-nav a {
+            color: var(--accent-gold);
+            text-decoration: none;
+            padding: 0.8rem 0;
+            font-size: 1.2rem;
+            font-weight: 500;
+            display: block;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .mobile-nav a:last-child {
+            border-bottom: none;
+        }
+        .mobile-nav.active {
+            display: flex;
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+            }
+            .burger {
+                display: block;
+            }
+            nav {
+                justify-content: flex-end;
+            }
+        }
+
         .auth-buttons {
             display: flex;
             gap: 0.8rem;
@@ -115,7 +175,7 @@
             cursor: pointer;
         }
 
-        /* Hero с фоновой фотографией — увеличена высота */
+        /* Hero с фоновой фотографией */
         .hero {
             background: url('Rectangle 4.png') center/cover no-repeat;
             min-height: 80vh;
@@ -128,7 +188,7 @@
             max-width: 800px;
             background: rgba(30, 42, 62, 0.75);
             backdrop-filter: blur(3px);
-            padding: 2.5rem 3rem;
+            padding: 2rem 2.5rem;
             border-radius: 32px;
             box-shadow: 0 8px 25px rgba(0,0,0,0.3);
             text-align: center;
@@ -137,13 +197,20 @@
             font-size: 2.8rem;
             font-weight: 700;
             color: var(--accent-gold);
-            margin-bottom: 1rem;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            margin-bottom: 0.5rem;
+            display: inline-block;
+            background: rgba(30,42,62,0.6);
+            padding: 0.2rem 1rem;
+            border-radius: 40px;
         }
         .hero p {
             font-size: 1.2rem;
             color: var(--accent-gold);
-            margin-top: 0.5rem;
+            margin-top: 1rem;
+            display: inline-block;
+            background: rgba(30,42,62,0.6);
+            padding: 0.2rem 1rem;
+            border-radius: 40px;
         }
 
         .about-section {
@@ -164,7 +231,6 @@
         .about-text {
             flex: 2;
         }
-        /* Подложка только под словом «О музее колледжа» */
         .about-text h2 {
             margin-bottom: 1rem;
             background: rgba(30, 42, 62, 0.7);
@@ -209,8 +275,13 @@
         .feature-card:hover {
             transform: translateY(-5px);
             border-color: var(--accent-gold);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.1);
         }
-        .feature-card i { font-size: 2.5rem; color: var(--accent-gold); margin-bottom: 1rem; }
+        .feature-card i {
+            font-size: 2.5rem;
+            color: var(--accent-gold);
+            margin-bottom: 1rem;
+        }
 
         .btn-excursion {
             background: var(--dark);
@@ -223,7 +294,10 @@
             cursor: pointer;
             transition: 0.2s;
         }
-        .btn-excursion:hover { background: #2d3f55; transform: scale(1.02); }
+        .btn-excursion:hover {
+            background: #2d3f55;
+            transform: scale(1.02);
+        }
 
         footer {
             background: var(--dark);
@@ -277,6 +351,11 @@
             background: white;
             padding: 2rem;
             border-radius: 28px;
+            box-shadow: var(--shadow-sm);
+        }
+        .page-content h2 {
+            color: var(--accent-gold);
+            margin-bottom: 1rem;
         }
         .gallery-grid {
             display: grid;
@@ -284,7 +363,7 @@
             gap: 1.5rem;
             margin-top: 1.5rem;
         }
-        .gallery-grid img {
+        .gallery-grid img, .exhibit-card img {
             width: 100%;
             height: 180px;
             object-fit: cover;
@@ -297,16 +376,25 @@
             overflow: hidden;
             box-shadow: var(--shadow-sm);
             transition: 0.2s;
+            cursor: pointer;
         }
-        .exhibit-card:hover { transform: translateY(-5px); }
-        .exhibit-card img {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
+        .exhibit-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.1);
         }
         .exhibit-info { padding: 1rem; }
-        .exhibit-info h3 { margin-bottom: 0.3rem; }
+        .exhibit-info h3 { margin-bottom: 0.3rem; color: var(--dark); }
         .exhibit-info p { color: var(--text-soft); font-size: 0.9rem; }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 1.8rem; }
+            .hero p { font-size: 1rem; }
+            .hero-text-box { padding: 1.5rem; }
+            .about-grid { flex-direction: column; }
+            .features { gap: 1rem; }
+            .feature-card { padding: 1.2rem; }
+            .page-content { margin: 1rem; padding: 1.2rem; }
+        }
     </style>
 </head>
 <body>
@@ -328,6 +416,14 @@
             <li><a data-page="history">История</a></li>
             <li><a data-page="contacts">Контакты</a></li>
         </ul>
+        <button class="burger" id="burgerBtn">☰</button>
+        <div id="mobileMenu" class="mobile-nav">
+            <a data-page="home">Главная</a>
+            <a data-page="exhibits">Экспонаты</a>
+            <a data-page="photoarchive">Фотоархив</a>
+            <a data-page="history">История</a>
+            <a data-page="contacts">Контакты</a>
+        </div>
     </nav>
     <div id="authArea"></div>
 </header>
@@ -378,61 +474,62 @@
         </div>
     </div>
 
-    <!-- ЭКСПОНАТЫ (3 карточки с фото) -->
+    <!-- ЭКСПОНАТЫ (реальные фотографии из твоих файлов) -->
     <div id="exhibitsPage" class="hidden-page">
         <div class="page-content">
             <h2>Экспонаты музея</h2>
-            <p>Уникальные предметы, хранящие историю нашего колледжа.</p>
             <div class="gallery-grid">
                 <div class="exhibit-card">
-                    <img src="https://via.placeholder.com/300x200?text=Диплом+1975" alt="Диплом выпускника">
+                    <img src="nfVPjxEn.jpg" alt="Диплом колледжа">
                     <div class="exhibit-info">
-                        <h3>Диплом выпускника 1975 г.</h3>
-                        <p>Первый диплом об окончании техникума. Уникальный документ с подписями основателей.</p>
+                        <h3>Диплом КФ РГУ СоцТех</h3>
+                        <p>Диплом об окончании Калмыцкого финансово-экономического колледжа.</p>
                     </div>
                 </div>
                 <div class="exhibit-card">
-                    <img src="https://via.placeholder.com/300x200?text=Награда+ВОВ" alt="Награда ветерана">
+                    <img src="hDp9GuBS.jpg" alt="Грамота и диплом">
                     <div class="exhibit-info">
-                        <h3>Награды ветеранов ВОВ</h3>
-                        <p>Медали и ордена преподавателей-участников Великой Отечественной войны.</p>
+                        <h3>Награды и дипломы</h3>
+                        <p>Победитель конкурса социальных и культурных проектов ПАО «ЛУКОЙЛ».</p>
                     </div>
                 </div>
                 <div class="exhibit-card">
-                    <img src="https://via.placeholder.com/300x200?text=Фото+преподавателей" alt="Старое фото">
+                    <img src="mXIUQX79.jpg" alt="Сертификаты">
                     <div class="exhibit-info">
-                        <h3>Фотохроника 1970–1980 гг.</h3>
-                        <p>Архивные снимки первых преподавателей и студентов.</p>
+                        <h3>Сертификаты участника</h3>
+                        <p>Документы о регистрации музея и участии в проектах.</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- ФОТОАРХИВ (отдельная страница, все фотографии) -->
+    <!-- ФОТОАРХИВ (твои фотографии) -->
     <div id="photoarchivePage" class="hidden-page">
         <div class="page-content">
             <h2>Фотоархив музея</h2>
-            <p>Снимки разных лет: выпуски, мероприятия, преподаватели.</p>
             <div class="gallery-grid">
-                <img src="https://via.placeholder.com/300x180?text=Выпуск+1975" alt="Выпуск 1975">
-                <img src="https://via.placeholder.com/300x180?text=Преподаватели+1980" alt="Преподаватели">
-                <img src="https://via.placeholder.com/300x180?text=Студенты+в+музее" alt="Экскурсия">
-                <img src="https://via.placeholder.com/300x180?text=Открытие+выставки" alt="Выставка">
-                <img src="https://via.placeholder.com/300x180?text=Встреча+выпускников" alt="Встреча выпускников">
-                <img src="https://via.placeholder.com/300x180?text=Награждение" alt="Награждение">
-                <img src="https://via.placeholder.com/300x180?text=Старое+здание" alt="Старое здание">
-                <img src="https://via.placeholder.com/300x180?text=Студенческая+жизнь" alt="Студенческая жизнь">
+                <img src="mXIUQX79.jpg" alt="Сертификаты музея">
+                <img src="hDp9GuBS.jpg" alt="Грамота конкурса">
+                <img src="nfVPjxEn.jpg" alt="Диплом колледжа">
+                <img src="VpFsXF_P.jpg" alt="Документ">
+                <img src="WRB3D8Fv.jpg" alt="Награды">
+                <img src="E83O7Xv1.jpg" alt="Гордость и слава">
             </div>
         </div>
     </div>
 
-    <!-- ИСТОРИЯ -->
+    <!-- ИСТОРИЯ (с твоими фотографиями и документами) -->
     <div id="historyPage" class="hidden-page">
         <div class="page-content">
             <h2>История колледжа и музея</h2>
             <p>Калмыцкий филиал РГУ СоцТех ведёт историю с 1970-х. Музей создан для сохранения памяти о первых директорах, преподавателях, выдающихся выпускниках.</p>
             <p>Сегодня здесь хранятся уникальные документы, редкие фотографии, письма и личные вещи, которые помогают сохранить связь поколений.</p>
+            <div class="gallery-grid">
+                <img src="maxresdefault.jpg" alt="Вести Калмыкия">
+                <img src="gYNtncSN.jpg" alt="Проекты и лица">
+                <img src="s43X7otr.jpg" alt="Социальное партнерство">
+            </div>
         </div>
     </div>
 
@@ -454,12 +551,18 @@
         </div>
     </div>
 
-    <!-- страница-заглушка для сертификата -->
+    <!-- страница для сертификата (реальные PDF документы) -->
     <div id="certificatePage" class="hidden-page">
         <div class="page-content">
             <h2>Сертификат музея</h2>
-            <img src="https://via.placeholder.com/600x400?text=Сертификат+музея+КФ+РГУ+СоцТех" style="width:100%; border-radius:24px; margin:1rem 0">
+            <img src="mXIUQX79.jpg" alt="Сертификаты" style="width:100%; border-radius:24px; margin:1rem 0">
             <p>Официальная регистрация на Портале школьных музеев РФ. Музей соответствует всем требованиям образовательной организации.</p>
+            <p><strong>Документы:</strong></p>
+            <ul>
+                <li><a href="Sertifikat-o-registratsii-muzeya-obrazovatelnoj-organizatsii-na-Portale-shkolnyh-muzeev-RF.pdf" target="_blank">Сертификат о регистрации (PDF)</a></li>
+                <li><a href="O-naznachenii-rukovoditelya-muzeya.pdf" target="_blank">Приказ о назначении руководителя музея (PDF)</a></li>
+                <li><a href="Akt-obsledovaniya-istoriko-kraevedcheskogo-muzeya-istorii-KF-ot-25.12.2023-g..pdf" target="_blank">Акт обследования музея (PDF)</a></li>
+            </ul>
             <button class="btn-excursion" onclick="showPage('homePage')">← Вернуться на главную</button>
         </div>
     </div>
@@ -471,6 +574,7 @@
 </footer>
 
 <script>
+    // Твоя полная JS-логика с сохранением пользователей
     let currentUser = null;
     function loadUsers() { return JSON.parse(localStorage.getItem("museum_users") || "{}"); }
     function saveUsers(u) { localStorage.setItem("museum_users", JSON.stringify(u)); }
@@ -511,8 +615,9 @@
             let el=document.getElementById(id); if(el) el.classList.add("hidden-page");
         });
         document.getElementById(pageId).classList.remove("hidden-page");
+        document.getElementById("mobileMenu")?.classList.remove("active");
     }
-    document.querySelectorAll("nav a").forEach(link=>{
+    document.querySelectorAll("nav ul a").forEach(link=>{
         link.addEventListener("click",()=>{
             let page=link.dataset.page;
             if(page==="home") showPage("homePage");
@@ -521,6 +626,29 @@
             if(page==="history") showPage("historyPage");
             if(page==="contacts") showPage("contactsPage");
         });
+    });
+    document.querySelectorAll(".mobile-nav a").forEach(link=>{
+        link.addEventListener("click",()=>{
+            let page=link.dataset.page;
+            if(page==="home") showPage("homePage");
+            if(page==="exhibits") showPage("exhibitsPage");
+            if(page==="photoarchive") showPage("photoarchivePage");
+            if(page==="history") showPage("historyPage");
+            if(page==="contacts") showPage("contactsPage");
+        });
+    });
+    const burgerBtn = document.getElementById("burgerBtn");
+    const mobileMenu = document.getElementById("mobileMenu");
+    if(burgerBtn) {
+        burgerBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            mobileMenu.classList.toggle("active");
+        });
+    }
+    document.addEventListener("click", (e) => {
+        if(mobileMenu && mobileMenu.classList.contains("active") && !burgerBtn.contains(e.target) && !mobileMenu.contains(e.target)) {
+            mobileMenu.classList.remove("active");
+        }
     });
     document.querySelectorAll(".feature-card").forEach(card=>{
         card.addEventListener("click",()=>{
