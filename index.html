@@ -21,11 +21,12 @@
             --text-dark: #1F2937;
             --text-soft: #4B5563;
             --border-light: #E5E7EB;
-            --shadow-sm: 0 8px 20px rgba(0,0,0,0.05);
+            --shadow-sm: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+            --shadow-hover: 0 20px 25px -12px rgba(0, 0, 0, 0.15);
         }
 
         body {
-            background: var(--bg-light);
+            background: linear-gradient(135deg, var(--bg-light) 0%, #f1f5f9 100%);
             color: var(--text-dark);
             line-height: 1.5;
         }
@@ -38,8 +39,9 @@
             align-items: center;
             flex-wrap: wrap;
             gap: 1rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
             position: relative;
+            z-index: 100;
         }
         .logo-area {
             display: flex;
@@ -47,12 +49,14 @@
             gap: 12px;
         }
         .logo-img {
-            width: 60px;
-            height: 60px;
+            width: 55px;
+            height: 55px;
+            background: rgba(255,255,255,0.1);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
+            padding: 4px;
         }
         .logo-img img {
             width: 100%;
@@ -70,7 +74,7 @@
             font-weight: 700;
         }
 
-        /* Десктопное меню */
+        /* Десктопная навигация */
         nav {
             flex: 1;
             display: flex;
@@ -87,12 +91,27 @@
             font-weight: 500;
             transition: 0.2s;
             cursor: pointer;
+            padding: 0.5rem 0;
+            position: relative;
+        }
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-gold);
+            transition: width 0.2s;
+        }
+        nav a:hover::after {
+            width: 100%;
         }
         nav a:hover {
             color: var(--accent-gold);
         }
 
-        /* Бургер-меню (появляется на телефонах) */
+        /* Бургер-меню (для мобильных) */
         .burger {
             display: none;
             font-size: 1.8rem;
@@ -142,6 +161,7 @@
             }
         }
 
+        /* Кнопки авторизации */
         .auth-buttons {
             display: flex;
             gap: 0.8rem;
@@ -151,14 +171,23 @@
             border: 1px solid rgba(255,255,255,0.4);
             color: white;
             padding: 0.4rem 1.2rem;
-            border-radius: 40px;
+            border-radius: 60px;
             cursor: pointer;
             transition: 0.2s;
+            font-weight: 500;
         }
         .auth-btn.register {
             background: var(--accent-gold);
             border: none;
             color: var(--dark);
+        }
+        .auth-btn.register:hover {
+            background: #b48c2e;
+            transform: translateY(-2px);
+        }
+        .auth-btn.outline:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-2px);
         }
         .user-greeting {
             color: white;
@@ -173,12 +202,16 @@
             padding: 6px 12px;
             border-radius: 30px;
             cursor: pointer;
+            transition: 0.2s;
+        }
+        .logout-icon:hover {
+            background: rgba(255,255,255,0.3);
         }
 
-        /* Hero с фоновой фотографией */
+        /* Герой-секция с фоновым фото */
         .hero {
-            background: url('Rectangle 4.png') center/cover no-repeat;
-            min-height: 80vh;
+            background: linear-gradient(rgba(30,42,62,0.5), rgba(30,42,62,0.6)), url('Rectangle 4.png') center/cover no-repeat fixed;
+            min-height: 85vh;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -186,33 +219,36 @@
         }
         .hero-text-box {
             max-width: 800px;
-            background: rgba(30, 42, 62, 0.75);
-            backdrop-filter: blur(3px);
+            background: rgba(30, 42, 62, 0.85);
+            backdrop-filter: blur(4px);
             padding: 2rem 2.5rem;
-            border-radius: 32px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            border-radius: 48px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
             text-align: center;
+            border: 1px solid rgba(201, 160, 61, 0.3);
         }
         .hero h1 {
-            font-size: 2.8rem;
+            font-size: 2.6rem;
             font-weight: 700;
             color: var(--accent-gold);
             margin-bottom: 0.5rem;
             display: inline-block;
-            background: rgba(30,42,62,0.6);
-            padding: 0.2rem 1rem;
-            border-radius: 40px;
+            background: rgba(0,0,0,0.5);
+            padding: 0.3rem 1.5rem;
+            border-radius: 60px;
+            letter-spacing: 1px;
         }
         .hero p {
             font-size: 1.2rem;
             color: var(--accent-gold);
             margin-top: 1rem;
             display: inline-block;
-            background: rgba(30,42,62,0.6);
+            background: rgba(0,0,0,0.5);
             padding: 0.2rem 1rem;
-            border-radius: 40px;
+            border-radius: 60px;
         }
 
+        /* Секция "О музее" */
         .about-section {
             max-width: 1200px;
             margin: 3rem auto;
@@ -224,26 +260,28 @@
             align-items: center;
             flex-wrap: wrap;
             background: var(--card-white);
-            border-radius: 28px;
+            border-radius: 32px;
             padding: 2rem;
             box-shadow: var(--shadow-sm);
+            transition: 0.2s;
         }
         .about-text {
             flex: 2;
         }
         .about-text h2 {
             margin-bottom: 1rem;
-            background: rgba(30, 42, 62, 0.7);
+            background: rgba(30, 42, 62, 0.1);
             display: inline-block;
-            padding: 0.5rem 1.2rem;
-            border-radius: 40px;
+            padding: 0.5rem 1.5rem;
+            border-radius: 60px;
             font-size: 1.6rem;
             color: var(--accent-gold);
+            border: 1px solid rgba(201, 160, 61, 0.3);
         }
         .about-text p {
             margin-bottom: 1rem;
             color: var(--text-soft);
-            line-height: 1.5;
+            line-height: 1.6;
         }
         .about-image {
             flex: 1;
@@ -251,10 +289,15 @@
         }
         .about-image img {
             max-width: 100%;
-            border-radius: 24px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            border-radius: 28px;
+            box-shadow: 0 12px 28px rgba(0,0,0,0.15);
+            transition: 0.3s;
+        }
+        .about-image img:hover {
+            transform: scale(1.02);
         }
 
+        /* Три карточки-фишки */
         .features {
             max-width: 1200px;
             margin: 3rem auto;
@@ -265,135 +308,217 @@
         }
         .feature-card {
             background: var(--card-white);
-            border-radius: 24px;
-            padding: 1.8rem;
+            border-radius: 28px;
+            padding: 2rem 1.5rem;
             text-align: center;
             cursor: pointer;
-            transition: 0.2s;
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
             border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-sm);
         }
         .feature-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px);
             border-color: var(--accent-gold);
-            box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow-hover);
         }
         .feature-card i {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             color: var(--accent-gold);
             margin-bottom: 1rem;
         }
+        .feature-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+        .feature-card p {
+            color: var(--text-soft);
+            font-size: 0.95rem;
+        }
 
+        /* Кнопка записи */
         .btn-excursion {
-            background: var(--dark);
+            background: linear-gradient(135deg, var(--dark) 0%, #2a3a4f 100%);
             color: white;
             border: none;
-            padding: 0.9rem 2rem;
+            padding: 1rem 2.5rem;
             border-radius: 60px;
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
             transition: 0.2s;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
         .btn-excursion:hover {
-            background: #2d3f55;
-            transform: scale(1.02);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            background: linear-gradient(135deg, #2a3a4f 0%, var(--dark) 100%);
         }
 
+        /* Футер */
         footer {
             background: var(--dark);
             color: #DDD;
             text-align: center;
             padding: 2rem;
             margin-top: 3rem;
+            font-size: 0.9rem;
         }
 
+        /* Модальные окна */
         .modal {
             display: none;
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(5px);
             align-items: center;
             justify-content: center;
             z-index: 1000;
         }
-        .modal.active { display: flex; }
+        .modal.active {
+            display: flex;
+        }
         .modal-content {
             background: white;
             max-width: 420px;
             width: 90%;
-            border-radius: 28px;
+            border-radius: 32px;
             padding: 2rem;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            animation: modalFade 0.2s ease;
+        }
+        @keyframes modalFade {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .modal-content h3 {
+            color: var(--accent-gold);
+            margin-bottom: 1.2rem;
+            text-align: center;
         }
         .modal-content input {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             margin: 8px 0;
-            border: 1px solid #ccc;
+            border: 1px solid var(--border-light);
             border-radius: 60px;
+            font-size: 0.95rem;
         }
-        .error { color: #c0392b; font-size: 0.8rem; }
+        .modal-content input:focus {
+            outline: none;
+            border-color: var(--accent-gold);
+        }
+        .error {
+            color: #c0392b;
+            font-size: 0.75rem;
+            padding-left: 10px;
+        }
         .toast {
             position: fixed;
-            bottom: 20px;
+            bottom: 25px;
             left: 50%;
             transform: translateX(-50%);
             background: #1e2a3e;
             color: white;
-            padding: 10px 20px;
+            padding: 12px 24px;
             border-radius: 60px;
             z-index: 1100;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            animation: fadeInUp 0.2s ease;
         }
-        .hidden-page { display: none; }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+        .hidden-page {
+            display: none;
+        }
         .page-content {
-            max-width: 1000px;
+            max-width: 1100px;
             margin: 2rem auto;
             background: white;
             padding: 2rem;
-            border-radius: 28px;
+            border-radius: 32px;
             box-shadow: var(--shadow-sm);
         }
         .page-content h2 {
             color: var(--accent-gold);
             margin-bottom: 1rem;
+            border-left: 4px solid var(--accent-gold);
+            padding-left: 1rem;
         }
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
             gap: 1.5rem;
             margin-top: 1.5rem;
         }
-        .gallery-grid img, .exhibit-card img {
+        .gallery-grid img {
             width: 100%;
             height: 180px;
             object-fit: cover;
             border-radius: 20px;
-            box-shadow: var(--shadow-sm);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+            transition: 0.2s;
+        }
+        .gallery-grid img:hover {
+            transform: scale(1.02);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
         }
         .exhibit-card {
             background: var(--card-white);
             border-radius: 24px;
             overflow: hidden;
-            box-shadow: var(--shadow-sm);
-            transition: 0.2s;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+            transition: 0.25s;
             cursor: pointer;
         }
         .exhibit-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+            transform: translateY(-6px);
+            box-shadow: 0 18px 30px rgba(0,0,0,0.12);
         }
-        .exhibit-info { padding: 1rem; }
-        .exhibit-info h3 { margin-bottom: 0.3rem; color: var(--dark); }
-        .exhibit-info p { color: var(--text-soft); font-size: 0.9rem; }
+        .exhibit-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+        .exhibit-info {
+            padding: 1rem;
+        }
+        .exhibit-info h3 {
+            margin-bottom: 0.3rem;
+            color: var(--dark);
+        }
+        .exhibit-info p {
+            color: var(--text-soft);
+            font-size: 0.85rem;
+        }
+        .pdf-link {
+            display: inline-block;
+            margin-top: 0.5rem;
+            color: var(--accent-gold);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .pdf-link i {
+            margin-right: 5px;
+        }
 
         @media (max-width: 768px) {
             .hero h1 { font-size: 1.8rem; }
-            .hero p { font-size: 1rem; }
-            .hero-text-box { padding: 1.5rem; }
+            .hero p { font-size: 0.95rem; }
+            .hero-text-box { padding: 1.2rem; }
             .about-grid { flex-direction: column; }
             .features { gap: 1rem; }
             .feature-card { padding: 1.2rem; }
+            .gallery-grid { grid-template-columns: 1fr 1fr; gap: 0.8rem; }
             .page-content { margin: 1rem; padding: 1.2rem; }
+        }
+        @media (max-width: 480px) {
+            .gallery-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -429,7 +554,7 @@
 </header>
 
 <main>
-    <!-- ГЛАВНАЯ -->
+    <!-- ГЛАВНАЯ СТРАНИЦА -->
     <div id="homePage">
         <div class="hero">
             <div class="hero-text-box">
@@ -474,7 +599,7 @@
         </div>
     </div>
 
-    <!-- ЭКСПОНАТЫ (реальные фотографии из твоих файлов) -->
+    <!-- ЭКСПОНАТЫ (3 карточки с твоими фото) -->
     <div id="exhibitsPage" class="hidden-page">
         <div class="page-content">
             <h2>Экспонаты музея</h2>
@@ -509,17 +634,20 @@
         <div class="page-content">
             <h2>Фотоархив музея</h2>
             <div class="gallery-grid">
-                <img src="mXIUQX79.jpg" alt="Сертификаты музея">
-                <img src="hDp9GuBS.jpg" alt="Грамота конкурса">
-                <img src="nfVPjxEn.jpg" alt="Диплом колледжа">
+                <img src="mXIUQX79.jpg" alt="Сертификаты">
+                <img src="hDp9GuBS.jpg" alt="Грамота">
+                <img src="nfVPjxEn.jpg" alt="Диплом">
                 <img src="VpFsXF_P.jpg" alt="Документ">
                 <img src="WRB3D8Fv.jpg" alt="Награды">
                 <img src="E83O7Xv1.jpg" alt="Гордость и слава">
+                <img src="maxresdefault.jpg" alt="Вести Калмыкия">
+                <img src="gYNtncSN.jpg" alt="Проекты и лица">
+                <img src="s43X7otr.jpg" alt="Социальное партнерство">
             </div>
         </div>
     </div>
 
-    <!-- ИСТОРИЯ (с твоими фотографиями и документами) -->
+    <!-- ИСТОРИЯ -->
     <div id="historyPage" class="hidden-page">
         <div class="page-content">
             <h2>История колледжа и музея</h2>
@@ -543,26 +671,27 @@
             <hr style="margin:20px 0">
             <h3>Форма обратной связи</h3>
             <form id="contactForm">
-                <input type="text" id="contactName" placeholder="Ваше имя" style="width:100%; margin:5px 0; padding:10px; border-radius:40px;">
-                <input type="email" id="contactEmail" placeholder="Ваш email" style="width:100%; margin:5px 0; padding:10px; border-radius:40px;">
-                <textarea id="contactMsg" rows="3" placeholder="Сообщение" style="width:100%; margin:5px 0; padding:10px; border-radius:20px;"></textarea>
+                <input type="text" id="contactName" placeholder="Ваше имя">
+                <input type="email" id="contactEmail" placeholder="Ваш email">
+                <textarea id="contactMsg" rows="3" placeholder="Сообщение"></textarea>
                 <button type="submit" class="btn-excursion" style="width:100%">Отправить</button>
             </form>
         </div>
     </div>
 
-    <!-- страница для сертификата (реальные PDF документы) -->
+    <!-- Сертификат и официальные документы -->
     <div id="certificatePage" class="hidden-page">
         <div class="page-content">
             <h2>Сертификат музея</h2>
             <img src="mXIUQX79.jpg" alt="Сертификаты" style="width:100%; border-radius:24px; margin:1rem 0">
             <p>Официальная регистрация на Портале школьных музеев РФ. Музей соответствует всем требованиям образовательной организации.</p>
-            <p><strong>Документы:</strong></p>
-            <ul>
-                <li><a href="Sertifikat-o-registratsii-muzeya-obrazovatelnoj-organizatsii-na-Portale-shkolnyh-muzeev-RF.pdf" target="_blank">Сертификат о регистрации (PDF)</a></li>
-                <li><a href="O-naznachenii-rukovoditelya-muzeya.pdf" target="_blank">Приказ о назначении руководителя музея (PDF)</a></li>
-                <li><a href="Akt-obsledovaniya-istoriko-kraevedcheskogo-muzeya-istorii-KF-ot-25.12.2023-g..pdf" target="_blank">Акт обследования музея (PDF)</a></li>
+            <p><strong>📄 Документы музея:</strong></p>
+            <ul style="margin-left: 1.5rem;">
+                <li><a href="Sertifikat-o-registratsii-muzeya-obrazovatelnoj-organizatsii-na-Portale-shkolnyh-muzeev-RF.pdf" target="_blank" class="pdf-link"><i class="fas fa-file-pdf"></i> Сертификат о регистрации (PDF)</a></li>
+                <li><a href="O-naznachenii-rukovoditelya-muzeya.pdf" target="_blank" class="pdf-link"><i class="fas fa-file-pdf"></i> Приказ о назначении руководителя музея (PDF)</a></li>
+                <li><a href="Akt-obsledovaniya-istoriko-kraevedcheskogo-muzeya-istorii-KF-ot-25.12.2023-g..pdf" target="_blank" class="pdf-link"><i class="fas fa-file-pdf"></i> Акт обследования музея (PDF)</a></li>
             </ul>
+            <br>
             <button class="btn-excursion" onclick="showPage('homePage')">← Вернуться на главную</button>
         </div>
     </div>
@@ -571,10 +700,34 @@
 <footer>
     <p>© 2026 Музей КФ РГУ СоцТех. Официальный сайт филиала.</p>
     <p>г. Элиста, проспект Чонкушова, 71 | museum@kflial.rgust.ru</p>
+    <p><i class="fas fa-certificate" style="color: var(--accent-gold);"></i> Зарегистрирован на Портале школьных музеев РФ</p>
 </footer>
 
+<!-- Модальные окна (регистрация / вход) -->
+<div id="registerModal" class="modal">
+    <div class="modal-content">
+        <h3>🔐 Регистрация</h3>
+        <input type="text" id="regName" placeholder="Ваше имя">
+        <input type="email" id="regEmail" placeholder="Email">
+        <input type="password" id="regPass" placeholder="Пароль (от 6 символов)">
+        <input type="password" id="regPass2" placeholder="Подтвердите пароль">
+        <div class="error" id="regError"></div>
+        <button id="doRegister" class="btn-excursion" style="width:100%; margin-top:12px;">Создать аккаунт</button>
+        <p style="margin-top: 12px; text-align:center;">Уже есть аккаунт? <a href="#" id="switchToLogin" style="color: var(--accent-gold);">Войти</a></p>
+    </div>
+</div>
+<div id="loginModal" class="modal">
+    <div class="modal-content">
+        <h3>🔑 Вход</h3>
+        <input type="email" id="loginEmail" placeholder="Email">
+        <input type="password" id="loginPass" placeholder="Пароль">
+        <div class="error" id="loginError"></div>
+        <button id="doLogin" class="btn-excursion" style="width:100%; margin-top:12px;">Войти</button>
+        <p style="margin-top: 12px; text-align:center;">Нет аккаунта? <a href="#" id="switchToReg" style="color: var(--accent-gold);">Регистрация</a></p>
+    </div>
+</div>
+
 <script>
-    // Твоя полная JS-логика с сохранением пользователей
     let currentUser = null;
     function loadUsers() { return JSON.parse(localStorage.getItem("museum_users") || "{}"); }
     function saveUsers(u) { localStorage.setItem("museum_users", JSON.stringify(u)); }
@@ -582,9 +735,9 @@
         const area = document.getElementById("authArea");
         if(currentUser) {
             area.innerHTML = `<div class="user-greeting">👋 Привет, ${currentUser.name}<button class="logout-icon" id="logoutBtn">Выйти</button></div>`;
-            document.getElementById("logoutBtn")?.addEventListener("click", () => { currentUser=null; localStorage.removeItem("museum_current"); updateAuthUI(); showToast("Вы вышли"); });
+            document.getElementById("logoutBtn")?.addEventListener("click", () => { currentUser=null; localStorage.removeItem("museum_current"); updateAuthUI(); showToast("Вы вышли из аккаунта"); });
         } else {
-            area.innerHTML = `<div class="auth-buttons"><button class="auth-btn" id="showLoginBtn">Вход</button><button class="auth-btn register" id="showRegBtn">Регистрация</button></div>`;
+            area.innerHTML = `<div class="auth-buttons"><button class="auth-btn outline" id="showLoginBtn">Вход</button><button class="auth-btn register" id="showRegBtn">Регистрация</button></div>`;
             document.getElementById("showLoginBtn")?.addEventListener("click", ()=>openModal("loginModal"));
             document.getElementById("showRegBtn")?.addEventListener("click", ()=>openModal("registerModal"));
         }
@@ -592,13 +745,14 @@
     function openModal(id) { document.getElementById(id).classList.add("active"); }
     function closeModals() { document.querySelectorAll(".modal").forEach(m=>m.classList.remove("active")); }
     function showToast(msg) { let t=document.createElement("div"); t.className="toast"; t.innerText=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),3000); }
+
     document.getElementById("doRegister")?.addEventListener("click",()=>{
         let name=document.getElementById("regName").value.trim(), email=document.getElementById("regEmail").value.trim(), p1=document.getElementById("regPass").value, p2=document.getElementById("regPass2").value, err=document.getElementById("regError");
         if(!name||!email||!p1){err.innerText="Заполните все поля";return;}
         if(p1.length<6){err.innerText="Пароль минимум 6 символов";return;}
         if(p1!==p2){err.innerText="Пароли не совпадают";return;}
         let users=loadUsers(); if(users[email]){err.innerText="Email уже зарегистрирован";return;}
-        users[email]={name,email,password:p1}; saveUsers(users); err.innerText=""; closeModals(); showToast("Регистрация успешна! Войдите.");
+        users[email]={name,email,password:p1}; saveUsers(users); err.innerText=""; closeModals(); showToast("Регистрация успешна! Теперь войдите.");
         document.getElementById("loginEmail").value=email; openModal("loginModal");
     });
     document.getElementById("doLogin")?.addEventListener("click",()=>{
@@ -615,19 +769,10 @@
             let el=document.getElementById(id); if(el) el.classList.add("hidden-page");
         });
         document.getElementById(pageId).classList.remove("hidden-page");
-        document.getElementById("mobileMenu")?.classList.remove("active");
+        if(mobileMenu) mobileMenu.classList.remove("active");
     }
-    document.querySelectorAll("nav ul a").forEach(link=>{
-        link.addEventListener("click",()=>{
-            let page=link.dataset.page;
-            if(page==="home") showPage("homePage");
-            if(page==="exhibits") showPage("exhibitsPage");
-            if(page==="photoarchive") showPage("photoarchivePage");
-            if(page==="history") showPage("historyPage");
-            if(page==="contacts") showPage("contactsPage");
-        });
-    });
-    document.querySelectorAll(".mobile-nav a").forEach(link=>{
+
+    document.querySelectorAll("nav ul a, .mobile-nav a").forEach(link=>{
         link.addEventListener("click",()=>{
             let page=link.dataset.page;
             if(page==="home") showPage("homePage");
@@ -640,16 +785,9 @@
     const burgerBtn = document.getElementById("burgerBtn");
     const mobileMenu = document.getElementById("mobileMenu");
     if(burgerBtn) {
-        burgerBtn.addEventListener("click", (e) => {
-            e.stopPropagation();
-            mobileMenu.classList.toggle("active");
-        });
+        burgerBtn.addEventListener("click", (e) => { e.stopPropagation(); mobileMenu.classList.toggle("active"); });
+        document.addEventListener("click", (e) => { if(mobileMenu?.classList.contains("active") && !burgerBtn.contains(e.target) && !mobileMenu.contains(e.target)) mobileMenu.classList.remove("active"); });
     }
-    document.addEventListener("click", (e) => {
-        if(mobileMenu && mobileMenu.classList.contains("active") && !burgerBtn.contains(e.target) && !mobileMenu.contains(e.target)) {
-            mobileMenu.classList.remove("active");
-        }
-    });
     document.querySelectorAll(".feature-card").forEach(card=>{
         card.addEventListener("click",()=>{
             let link=card.dataset.link;
